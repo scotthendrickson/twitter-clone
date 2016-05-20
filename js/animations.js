@@ -3,7 +3,10 @@ $(document).ready(function() {
 (function(){
   $('#char-count').hide();
   $('#tweet-submit').hide();
+  $('.tweet-actions').hide();
+  $('.stats').hide();
 })();
+
 //When the user clicks on the textarea, the textarea should double in size
 // and the character count and Tweet buttons should be revealed.
   $('.tweet-compose').focus(function() {
@@ -22,13 +25,13 @@ $(document).ready(function() {
     });
 
 //Experimentation is the spice of life!
-    $('#tweet-content').mouseenter(function() {
+    $('#dashboard').mouseenter(function() {
       $('#char-count').fadeTo('fast', 1);
       $('#tweet-submit').fadeTo('fast', 1);
   });
-    $('#tweet-content').mouseleave(function() {
-      $('#char-count').hide('slow');
-      $('#tweet-submit').hide('slow');
+    $('#dashboard').mouseleave(function() {
+      $('#char-count').slideToggle();
+      $('#tweet-submit').slideToggle();
     });
 
 
@@ -58,6 +61,7 @@ new tweet should be created and added to the tweet stream in the main column,
 using the user’s fake profile image in the top left and username/fullname.*/
 var text ='';
 var addTweet = function(text) {
+
   if(text.length > 0 && text.length <= 140) {
 
     $('#stream').prepend(
@@ -131,8 +135,12 @@ var addTweet = function(text) {
 //The tweet actions (Reply, Retweet, etc) should only show up when you hover
 //over that individual tweet. Otherwise, they should be hidden.
 
-
-
+$('.tweet').mouseenter(function() {
+  $(this).find('.tweet-actions').fadeIn('fast');
+  });
+$('.tweet').mouseleave(function() {
+  $(this).find('.tweet-actions').fadeOut('fast');
+});
 
 
 
@@ -141,28 +149,64 @@ These should only expand if you click on the tweet. Have the students
 use a jQuery animation to accomplish the reveal, similar to how it’s
 done on Twitter.com*/
 
+$('.tweet').click(function() {
+  $(this).find('.stats').show('fast');
+});
+$('.tweet').mouseleave(function() {
+  $(this).find('.stats').hide('fast');
+});
+
+
+
+//## Black Diamond
+var storage = [];
+var Tweet = function(userName, fullName, avatarLocation, message) {
+  this.timeOfCreation = new Date();
+  this.favoritedCount = 0;
+  this.retweetedCount = 0;
+  this.userName = userName;
+  this.fullName = fullName;
+  this.avatarLocation = avatarLocation;
+  this.message = message;
+}
+/*My assumption is that in order for each of these parts to work I will need to create an array
+with each attribute (timeOfCreation, favoritedCount, retweetedCount, userName, fullName, and avatarLocation)
+being stored as an object in the array. Every time a tweet is created it will need to create an object.
+
+What I need to figure out from here though is how do I identify this information?
+Should I do it as the date stamp? That would keep everything unique.
+*/
+
+
+//* Make timestamps similar to how they look on Twitter (1h, 18m, 1m) and use the
+//jQuery "timeago" plugin to make them automatic.
 
 
 
 
 
 
+//* Implement the icons for when a tweet is favorited/retweeted in the upper right of the tweet.
 
 
 
 
 
 
+//* Implement the Bootstrap tooltips for when you hover over a user’s avatar image
 
 
 
 
 
-/*## Black Diamond
-* Make timestamps similar to how they look on Twitter (1h, 18m, 1m) and use the jQuery "timeago" plugin to make them automatic.
-* Implement the icons for when a tweet is favorited/retweeted in the upper right of the tweet.
-* Implement the Bootstrap tooltips for when you hover over a user’s avatar image
-* Persist new tweets using local storage
-* Persist new tweets using a service like parse https://parse.com/*/
+
+//* Persist new tweets using local storage
+
+
+
+
+
+
+//* Persist new tweets using a service like parse https://parse.com/
 
 });
